@@ -2,25 +2,39 @@
 
 A rigorous, end-to-end machine learning project to forecast daily temperatures in Ho Chi Minh City, leveraging 10 years of historical weather data.
 
+
 <br>
 
-<div align="center">
-    <a href="https://miles2542.github.io/G2-HCM_city_Weather_Forecasting/" target="_blank">
-        <img src="https://img.shields.io/badge/Live%20UI%20Demo-Click%20Here-brightgreen?style=for-the-badge&logo=rocket" alt="Live UI Demo">
-    </a>
-    &nbsp;&nbsp;
-    <a href="https://nbviewer.org/github/miles2542/G2-HCM_city_Weather_Forecasting/blob/main/MAIN_PRESENTATION_NOTEBOOK.ipynb" target="_blank">
-        <img src="https://img.shields.io/badge/Read%20the%20Full%20Analysis-Jupyter-orange?style=for-the-badge&logo=jupyter" alt="Full Analysis Notebook">
-    </a>
-    &nbsp;&nbsp;
-    <a href="https://github.com/miles2542/G2-HCM_city_Weather_Forecasting.git" target="_blank">
-        <img src="https://img.shields.io/badge/View%20on%20GitHub-Source%20Code-blue?style=for-the-badge&logo=github" alt="GitHub Repository">
-    </a>
-     &nbsp;&nbsp;
-    <a href="https://youtu.be/ipYcgondfPQ" target="_blank">
-        <img src="https://img.shields.io/badge/Watch%20the%20Demo-YouTube-red?style=for-the-badge&logo=youtube" alt="UI Demo Video">
-    </a>
-</div>
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="border: none; background-color: transparent;">
+  <tbody>
+    <tr style="border: none;">
+      <td width="25%" align="center" style="padding: 10px; border: none;">
+        <a href="https://miles2542.github.io/G2-HCM_city_Weather_Forecasting/" target="_blank">
+          <img height="68px" src="https://cdn-icons-gif.flaticon.com/17102/17102931.gif" alt="Animated dashboard icon"><br>
+          <b style="font-family: sans-serif;">Live UI Demo</b>
+        </a>
+      </td>
+      <td width="25%" align="center" style="padding: 10px; border: none;">
+        <a href="https://rawcdn.githack.com/miles2542/G2-HCM_city_Weather_Forecasting/0e66eab7da6ec2c9bdef52180fc9cd8c74418019/MAIN_PRESENTATION_NOTEBOOK.html" target="_blank">
+          <img height="58px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1767px-Jupyter_logo.svg.png" alt="Jupyter Notebook logo"><br>
+          <b style="font-family: sans-serif;">Full Analysis Notebook</b>
+        </a>
+      </td>
+      <td width="25%" align="center" style="padding: 10px; border: none;">
+        <a href="https://github.com/miles2542/G2-HCM_city_Weather_Forecasting.git" target="_blank">
+          <img height="64px" src="https://media.lordicon.com/icons/wired/flat/2572-logo-github.gif" alt="Animated GitHub logo"><br>
+          <b style="font-family: sans-serif;">GitHub Repository</b>
+        </a>
+      </td>
+      <td width="25%" align="center" style="padding: 10px; border: none;">
+        <a href="https://youtu.be/ipYcgondfPQ" target="_blank">
+          <img height="84px" src="https://i.pinimg.com/originals/e1/e3/3b/e1e33b75c6622f230c61b0393e3fad7c.gif" alt="Animated YouTube logo"><br>
+          <b style="font-family: sans-serif;">Watch the Demo</b>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -35,12 +49,12 @@ The project's objective is to forecast the daily average temperature in Ho Chi M
 These components—a powerful seasonal cycle, a non-linear trend, and short-term noise—established the feature engineering requirements for any successful model.
 
 <p align="center">
-  <img src="assets/readme_images/fig_stl_decomposition.png" width="80%" alt="STL Decomposition Plot">
+  <img src="assets/readme_images/fig_stl_decomposition.png" width="100%" alt="STL Decomposition Plot">
   <br>
   <em>STL decomposition visually confirming the Trend, Seasonal, and Residual components of the temperature time series.</em>
 </p>
 <p align="center">
-  <img src="assets/readme_images/fig_monthly_seasonality.png" width="80%" alt="Monthly Seasonality Plot">
+  <img src="assets/readme_images/fig_monthly_seasonality.png" width="100%" alt="Monthly Seasonality Plot">
   <br>
   <em>The bimodal monsoon cycle: a primary peak in heat (Apr-May) before the rainy season, and a cooler period (Dec-Jan) during the dry season.</em>
 </p>
@@ -61,7 +75,7 @@ We engineered a comprehensive set of **139 features** from the raw daily data to
 To address severe multicollinearity for linear models, `MultiTaskLassoCV` was used to select a parsimonious subset of **41 features**.
 
 <p align="center">
-  <img src="assets/readme_images/lasso_sunburst_chart.png" width="60%" alt="Lasso Feature Selection Sunburst">
+  <img src="assets/readme_images/lasso_sunburst_chart.png" width="80%" alt="Lasso Feature Selection Sunburst">
   <br>
   <em>Sunburst chart visualizing LASSO's aggressive pruning, primarily on redundant Lag and Rolling Window features.</em>
 </p>
@@ -100,12 +114,12 @@ The ensemble model consistently outperformed the alternate across every forecast
 | **Average** | **0.6194**    | 0.6136       | **0.9665**      | 0.9740         | **0.7699**     | 0.7745        |
 
 <p align="center">
-  <img src="assets/readme_images/fig_ts_dashboard.png" width="90%" alt="Time Series Dashboard">
+  <img src="assets/readme_images/fig_ts_dashboard.png" width="100%" alt="Time Series Dashboard">
   <br>
   <em>Champion model's t+1 predictions (red dotted line) tracking the actual temperature (blue line) on the unseen test set.</em>
 </p>
 <p align="center">
-  <img src="assets/readme_images/fig_stat_dashboard.png" width="90%" alt="Statistical Dashboard">
+  <img src="assets/readme_images/fig_stat_dashboard.png" width="100%" alt="Statistical Dashboard">
   <br>
   <em>Diagnostic plots confirming the model is well-calibrated (left) and that its errors are unbiased and approximately normally distributed (right).</em>
 </p>
@@ -134,7 +148,7 @@ We compared two strategies over a 180-day test window:
 The results were definitive. The adaptive strategy, which retrained 5 times in response to detected drift, consistently outperformed the static model. It achieved a **+1.56% reduction in RMSE** and a **+2.81% relative improvement in R²**.
 
 <p align="center">
-  <img src="assets/readme_images/retraining_simulation_chart.png" width="90%" alt="Rolling RMSE of Drift Simulation">
+  <img src="assets/readme_images/retraining_simulation_chart.png" width="100%" alt="Rolling RMSE of Drift Simulation">
   <br>
   <em>The 30-day rolling RMSE of the static (red) vs. adaptive (teal) models. The adaptive model's error is consistently suppressed, especially after the retraining events (green dashed lines), proving the effectiveness of the drift detection policy.</em>
 </p>
