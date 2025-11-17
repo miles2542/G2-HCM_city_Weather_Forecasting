@@ -1,0 +1,29 @@
+{
+  "daily_forecast": [
+    {
+      "day": "Monday",
+      "temp": 29,
+      "icon": "images/icons/cloudy-day-2.svg"
+    },
+    {
+      "day": "Tuesday",
+      "temp": 30,
+      "icon": "images/icons/day.svg"
+    },
+    {
+      "day": "Wednesday",
+      "temp": 28,
+      "icon": "images/icons/rainy-1.svg"
+    },
+    {
+      "day": "Thursday",
+      "temp": 29,
+      "icon": "images/icons/cloudy.svg"
+    },
+    {
+      "day": "Friday",
+      "temp": 31,
+      "icon": "images/icons/day.svg"
+    }
+  ]
+}

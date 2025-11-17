@@ -1,0 +1,404 @@
+/* =================================
+   BASE & LAYOUT
+   ================================= */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #EAF4FF; /* Subtle light-blue outer background */
+	display: flex;
+	height: 100vh;
+	color: #2D2D2D; /* Dark Gray Text */
+}
+
+/* =================================
+   LEFT PANEL (IMAGE & TEMP)
+   ================================= */
+.left-panel {
+	flex: 0 0 380px; /* Fixed width */
+	background-image: url('images/backgrounds/day.png');
+	background-size: cover;
+	background-position: center;
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+	color: white;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.panel-header {
+	display: flex;
+	justify-content: flex-start;
+}
+
+#back-button {
+	background-color: rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(5px);
+	color: white;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 50px;
+	font-weight: 700;
+	transition: background-color 0.3s ease;
+}
+
+#back-button:hover {
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.location-info {
+	margin-top: 30px;
+}
+
+#location-name {
+	font-size: 1.8rem;
+	font-weight: 700;
+}
+
+#date-string {
+	font-size: 1rem;
+	opacity: 0.9;
+}
+
+.temp-display {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+	margin-top: 15vh;
+}
+
+#main-temp {
+	font-size: 8rem; /* Adjusted for balance */
+	font-weight: 700;
+	line-height: 1;
+}
+
+#weather-description {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin-top: 10px;
+}
+
+#main-weather-icon {
+	width: 40px;
+	height: 40px;
+}
+
+/* =================================
+   RIGHT PANEL (MAIN CONTENT)
+   ================================= */
+.right-panel {
+	flex-grow: 1;
+	background-color: white;
+	border-radius: 30px 0 0 30px;
+	padding: 40px;
+	overflow-y: auto;
+	height: 100vh;
+}
+
+.right-panel h2 {
+	font-size: 1.2rem;
+	color: #9AA0A6; /* Light Gray Text */
+	font-weight: 500;
+	margin-bottom: 20px;
+}
+
+.hourly-forecast-card {
+	background-color: #F7F9FC;
+	border-radius: 20px;
+	padding: 20px;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.hourly-placeholder {
+	color: #9AA0A6;
+	padding: 50px 0;
+}
+
+/* =================================
+   DETAILS GRID & CARDS
+   ================================= */
+.details-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+}
+
+.detail-card {
+	background-color: #F7F9FC;
+	border-radius: 20px;
+	padding: 20px;
+}
+
+.card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
+}
+
+.card-title {
+	font-size: 1rem;
+	color: #9AA0A6;
+	font-weight: 500;
+}
+
+.card-icon {
+	width: 24px;
+	height: 24px;
+	filter: invert(50%) sepia(11%) saturate(545%) hue-rotate(176deg) brightness(99%) contrast(87%); /* Tints icons to match the light gray */
+}
+
+.card-value {
+	font-size: 2.2rem;
+	font-weight: 700;
+	color: #2D2D2D;
+}
+
+.card-description {
+	font-size: 1rem;
+	color: #2D2D2D;
+	font-weight: 500;
+}
+
+/* =================================
+   DATA VISUALIZATION ELEMENTS
+   ================================= */
+
+/* --- BAR CONTAINER (Humidity, UV Index) --- */
+.bar-container {
+	display: flex;
+	gap: 5px;
+	width: 100%;
+	margin-top: 15px;
+}
+
+.bar-segment {
+	flex: 1;
+	height: 8px;
+	background-color: #E8E8E8;
+	border-radius: 4px;
+	position: relative;
+	text-align: center;
+}
+
+.bar-segment.active {
+	background-color: #4A8CF7; /* Primary Blue */
+}
+
+.bar-segment span { /* For UV Index text */
+	position: absolute;
+	top: 15px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 0.8rem;
+	color: #9AA0A6;
+}
+
+/* --- SLIDER CONTAINER (Feels Like, Chance of Rain) --- */
+.slider-container {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.slider-track {
+	width: 100%;
+	height: 8px;
+	background-color: #E8E8E8;
+	border-radius: 4px;
+	position: relative;
+}
+
+.slider-thumb { /* For Feels Like */
+	width: 16px;
+	height: 16px;
+	background-color: #4A8CF7;
+	border-radius: 50%;
+	border: 3px solid white;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.slider-fill { /* For Chance of Rain */
+	height: 100%;
+	background-color: #4A8CF7;
+	border-radius: 4px;
+}
+
+.slider-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.8rem;
+	color: #9AA0A6;
+	margin-top: 5px;
+}
+
+/* --- BAR/SLIDER LABELS --- */
+.bar-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.8rem;
+	color: #9AA0A6;
+	margin-top: 5px;
+	padding: 0 5px; /* Add slight padding to align with bars */
+}
+
+/* --- PRECIPITATION DOT SCALE --- */
+.dot-scale-container {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 15px;
+}
+
+.dot-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.dot-label {
+	font-size: 0.75rem;
+	color: #9AA0A6;
+}
+
+.scale-dot {
+	width: 10px;
+	height: 10px;
+	background-color: #E8E8E8;
+	border-radius: 50%;
+}
+
+.scale-dot.active {
+	background-color: #4A8CF7; /* Primary Blue */
+}
+
+/* --- New Corrected Hourly Chart Styles --- */
+
+/* The main container for the entire chart section */
+.hourly-forecast-card {
+    background-color: #F7F9FC;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* The wrapper for the timeline and the canvas */
+.chart-wrapper {
+    /* No special positioning needed anymore */
+}
+
+/* The timeline of hourly details */
+.hourly-timeline {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+    margin-bottom: 30px; /* Increased from 20px to 30px */
+}
+
+.hourly-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    flex-basis: 0;
+    flex-grow: 1;
+    position: relative; /* Added for vertical line positioning */
+}
+
+.hourly-item .time {
+    font-size: 0.8rem;
+    color: #9AA0A6;
+    font-weight: 500;
+}
+
+.hourly-item .icon {
+    width: 32px;
+    height: 32px;
+}
+
+.hourly-item .temp {
+    font-size: 1.1rem;
+    color: #2D2D2D;
+    font-weight: 700;
+}
+
+/* The canvas itself */
+#hourly-chart {
+    max-height: 150px;
+}
+
+/* Vertical line style for timeline */
+.vertical-line {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 180px; /* Increased from 170px to 180px */
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.08); /* Faint gray */
+}
+
+/* Custom Tooltip Styles */
+#chartjs-tooltip {
+    opacity: 0;
+    position: absolute;
+    background: white;
+    color: #2D2D2D;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    text-align: left;
+    border: 1px solid #eee;
+}
+#chartjs-tooltip .tooltip-time {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+#chartjs-tooltip .tooltip-temp {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+#chartjs-tooltip .tooltip-desc {
+    color: #9AA0A6;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+   ================================= */
+@media (max-width: 1024px) {
+	body {
+		flex-direction: column;
+		height: auto;
+	}
+
+	.left-panel {
+		flex: 0 0 450px; /* Fixed height for mobile view */
+	}
+
+	.right-panel {
+		height: auto;
+		border-radius: 30px 30px 0 0;
+		margin-top: -30px; /* Overlap effect */
+		box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+	}
+}

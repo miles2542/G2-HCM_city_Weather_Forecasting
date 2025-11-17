@@ -1,0 +1,280 @@
+/* =================================
+   BASE & BACKGROUND STYLES
+   ================================= */
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+	color: white;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	margin: 0;
+	padding: 0;
+}
+
+#app-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -1;
+	background-image: url('images/backgrounds/day.png');
+	background-size: cover;
+	background-position: center;
+	transition: background-image 0.5s ease-in-out;
+}
+
+/* =================================
+   CONTENT LAYOUT
+   ================================= */
+
+.content-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding: 20px;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+}
+
+/* =================================
+   TODAY'S WEATHER DISPLAY
+   ================================= */
+
+.today-display {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px; /* Space between buttons and temperature */
+}
+
+#today-weather-link {
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 2rem 0;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+#today-weather-link:hover {
+	transform: scale(1.05);
+}
+
+#today-temp {
+	font-size: 8rem;
+	font-weight: 700;
+	margin: 0;
+	color: rgb(3, 41, 43);
+}
+
+.details-text {
+	font-size: 1rem;
+	opacity: 0.8;
+	color: white;
+	margin-top: 0.5rem;
+}
+
+#prev-day-btn,
+#next-day-btn {
+	background-color: rgba(255, 255, 255, 0.3);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	backdrop-filter: blur(5px);
+	color: white;
+	border-radius: 50%; /* Makes it a circle */
+	width: 50px;
+	height: 50px;
+	font-size: 1.5rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+#prev-day-btn:hover,
+#next-day-btn:hover {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* =================================
+   DATE PICKER (THE PILL)
+   ================================= */
+
+.date-selector-wrapper {
+	margin-bottom: 2rem;
+}
+
+#forecast-date {
+	background-color: rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(5px);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 50px;
+	padding: 10px 20px;
+	color: white;
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.1rem;
+	cursor: pointer;
+	text-shadow: none;
+}
+
+#forecast-date:hover {
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* =================================
+   FORECAST CARDS
+   ================================= */
+
+.forecast-container {
+	display: flex;
+	gap: 15px;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 2rem;
+}
+
+.forecast-card {
+	background-color: rgba(255, 255, 255, 0.15);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 15px;
+	padding: 30px;       /* increased from 15px */
+	text-align: center;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	text-decoration: none;
+	color: inherit;
+	flex: 1;
+	min-width: 200px;   /* increased from 180px */
+	max-width: 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.forecast-card:hover {
+	transform: scale(1.05);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.forecast-card h4 {
+	margin: 0 0 10px 0;
+	font-size: 1.2rem;   /* increased from 1.1rem */
+	color: white;
+	font-weight: 700;
+}
+
+.forecast-card img {
+	width: 90px;   /* increased from 80px */
+	height: 90px;  /* increased from 80px */
+	margin: 10px 0;
+}
+
+.forecast-card .temperature {
+	font-size: 2rem;  /* increased from 1.5rem */
+	font-weight: 700;
+	color: white;
+	margin: 10px 0 0 0;
+}
+
+/* =================================
+   FOOTER & LINKS
+   ================================= */
+
+footer {
+	margin-top: 2rem;
+	text-align: center;
+}
+
+footer a {
+	background-color: rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(5px);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 50px;
+	padding: 10px 20px;
+	color: white;
+	text-decoration: none;
+	font-size: 1rem;
+	font-weight: 700;
+	display: inline-block;
+	transition: transform 0.2s ease;
+}
+
+footer a:hover {
+	transform: scale(1.05);
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+   ================================= */
+
+@media (max-width: 768px) {
+	#today-temp {
+		font-size: 5rem;
+	}
+
+	.forecast-container {
+		gap: 10px;
+	}
+
+	.forecast-card {
+		min-width: 100px;
+		max-width: 120px;
+		padding: 12px;
+	}
+
+	.details-text {
+		font-size: 0.9rem;
+	}
+}
+
+/* --- Main Header & Navigation --- */
+.main-header {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.main-nav ul {
+    display: flex;
+    justify-content: flex-start; /* Align to the left */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 15px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 50px; /* Rounded pill shape */
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    opacity: 0.8;
+}
+
+.main-nav a:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    opacity: 1;
+}
+
+.main-nav a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+    cursor: default;
+}
