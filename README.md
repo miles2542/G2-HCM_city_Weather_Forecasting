@@ -1,4 +1,4 @@
-# **Ho Chi Minh city Daily Forecasting**
+# **Group 2 - Ho Chi Minh city Daily Weather Forecasting**
 
 A rigorous, end-to-end machine learning project to forecast daily temperatures in Ho Chi Minh City, leveraging 10 years of historical weather data.
 
@@ -17,7 +17,7 @@ A rigorous, end-to-end machine learning project to forecast daily temperatures i
         <img src="https://img.shields.io/badge/View%20on%20GitHub-Source%20Code-blue?style=for-the-badge&logo=github" alt="GitHub Repository">
     </a>
      &nbsp;&nbsp;
-    <a href="https://www.youtube.com/watch?v=0SqWnLx0F_w" target="_blank">
+    <a href="https://youtu.be/ipYcgondfPQ" target="_blank">
         <img src="https://img.shields.io/badge/Watch%20the%20Demo-YouTube-red?style=for-the-badge&logo=youtube" alt="UI Demo Video">
     </a>
 </div>
