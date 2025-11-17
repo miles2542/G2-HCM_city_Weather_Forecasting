@@ -1,0 +1,101 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4A8CF7;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+}
+
+/* --- Progress Bar --- */
+.progress-nav {
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+}
+.progress-nav ol {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+}
+.progress-nav li {
+    flex: 1;
+    text-align: center;
+    font-weight: 700;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+.progress-nav li.active {
+    color: #2D2D2D; /* Black and Bold for active */
+    font-weight: 900;
+}
+
+/* --- Main Content Card --- */
+#content-container {
+    width: 90%; /* Use 90% of the available width */
+    max-width: 1200px; /* But don't let it get wider than 1200px */
+    margin: 0 auto; /* This will re-center the container */
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    text-align: left;
+}
+
+.content-section {
+    display: none; /* Hide all sections by default */
+}
+.content-section.active {
+    display: block; /* Show only the active one */
+}
+.content-section h2 {
+    margin-bottom: 20px;
+}
+
+/* --- Arrow Navigation --- */
+.page-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+#prev-step, #next-step {
+    background-color: #4A8CF7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+#prev-step:hover, #next-step:hover {
+    transform: scale(1.05);
+}
+#prev-step:disabled, #next-step:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.card iframe {
+      border: none;          /* Removes the default border */
+      width: 100%;           /* Makes the chart responsive to the card's width */
+      height: 450px;         /* Sets a fixed height for the chart */
+      margin-top: 15px;      /* Adds some space below the card title */
+    }

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="detail_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="app-background"></div>
+
+    <div class="left-panel">
+        <div class="panel-header">
+            <a id="back-button" href="index.html" class="back-link">← Back</a>
+        </div>
+
+        <div class="location-info">
+            <h1 id="location-name">HCMC, Viet Nam</h1>
+            <p id="date-string">Today, 22 Sep</p>
+        </div>
+
+        <div class="temp-display">
+            <p id="main-temp">28°</p>
+            <p id="weather-description">
+                <img id="main-weather-icon" src="images/icons/day.svg" alt="weather icon">
+                <span>Rainy</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <!-- THIS IS THE ONLY ADDED LINE -->
+        <div id="chartjs-tooltip"></div>
+        
+        <header>
+            <h2>Check out today's weather information</h2>
+        </header>
+
+        <section class="hourly-forecast-card">
+            <h2>Upcoming hours</h2>
+            <!-- Note: The hourly-placeholder div was removed to simplify the structure -->
+            <div class="chart-wrapper">
+                <div id="hourly-details-timeline" class="hourly-timeline">
+                    <!-- Hourly details like time, icon, and temp will be injected here by JavaScript -->
+                </div>
+                <canvas id="hourly-chart"></canvas>
+            </div>
+        </section>
+
+        <section class="more-details">
+            <h2>More details of today's weather</h2>
+
+            <div class="details-grid">
+                <!-- Humidity Card -->
+                <div class="detail-card" id="humidity-card">
+                    <div class="card-header">
+                        <h3>Humidity</h3>
+                        <img src="images/icons/humidity.svg" alt="humidity icon" class="card-icon">
+                    </div>
+                    <p class="card-value">82%</p>
+                    <div class="bar-container">
+                        <div class="bar-segment"></div>
+                        <div class="bar-segment active"></div>
+                        <div class="bar-segment"></div>
+                    </div>
+                    <div class="bar-labels">
+                        <p>Good</p>
+                        <p>Normal</p>
+                        <p>Bad</p>
+                    </div>
+                </div>
+
+                <!-- Wind Card -->
+                <div class="detail-card" id="wind-card">
+                    <div class="card-header">
+                        <h3>Wind</h3>
+                        <img src="images/icons/wind.svg" alt="wind icon" class="card-icon">
+                    </div>
+                    <p class="card-value">8 km/h</p>
+                    <!-- Placeholder for wind gauge if needed -->
+                </div>
+
+                <!-- Precipitation Card -->
+                <div class="detail-card" id="precip-card">
+                    <div class="card-header">
+                        <h3>Precipitation</h3>
+                        <img src="images/icons/precipitation.svg" alt="precipitation icon" class="card-icon">
+                    </div>
+                    <p class="card-value">1.4 cm</p>
+                    <div class="dot-scale-container">
+                        <div class="dot-wrapper"><span class="dot-label">0</span><div class="scale-dot active"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">10</span><div class="scale-dot active"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">20</span><div class="scale-dot"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">30</span><div class="scale-dot"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">40</span><div class="scale-dot"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">50</span><div class="scale-dot"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">60</span><div class="scale-dot"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">70</span><div class="scale-dot"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">80</span><div class="scale-dot"></div></div>
+                        <div class="dot-wrapper"><span class="dot-label">90</span><div class="scale-dot"></div></div>
+                    </div>
+                </div>
+
+                <!-- UV Index Card -->
+                <div class="detail-card" id="uv-index-card">
+                    <div class="card-header">
+                        <h3>UV Index</h3>
+                        <img src="images/icons/uv-index.svg" alt="uv index icon" class="card-icon">
+                    </div>
+                    <p class="card-value">4</p>
+                    <p class="card-description">Medium</p>
+                    <div class="bar-container">
+                        <div class="bar-segment active"><span>0-2</span></div>
+                        <div class="bar-segment"><span>3-5</span></div>
+                        <div class="bar-segment"><span>6-7</span></div>
+                        <div class="bar-segment"><span>8-10</span></div>
+                        <div class="bar-segment"><span>11+</span></div>
+                    </div>
+                </div>
+
+                <!-- Feels Like Card -->
+                <div class="detail-card" id="feels-like-card">
+                    <div class="card-header">
+                        <h3>Feels Like</h3>
+                        <img src="images/icons/feels-like.svg" alt="feels like icon" class="card-icon">
+                    </div>
+                    <p class="card-value">30°</p>
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-thumb" style="left: 60%;"></div>
+                        </div>
+                    </div>
+                    <div class="slider-labels">
+                        <p>0°</p>
+                        <p>25°</p>
+                        <p>50°</p>
+                    </div>
+                </div>
+
+                <!-- Chance of Rain Card -->
+                <div class="detail-card" id="precip-prob-card">
+                    <div class="card-header">
+                        <h3>Chance of Rain</h3>
+                        <img src="images/icons/umbrella.svg" alt="chance of rain icon" class="card-icon">
+                    </div>
+                    <p class="card-value">42%</p>
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 42%;"></div>
+                        </div>
+                        <div class="slider-labels"><p>0%</p><p>100%</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="detail.js"></script>
+</body>
+</html>

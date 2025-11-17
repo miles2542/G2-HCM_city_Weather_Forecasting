@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HCMC Weather Forecast</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="hourly_style.css">
+</head>
+<body>
+	<div id="app-background" aria-hidden="true"></div>
+
+	<div class="content-wrapper">
+		<header class="main-header">
+			<nav class="main-nav">
+				<ul>
+					<li><a href="about.html">About our project</a></li>
+					<li><a href="index.html">Daily predict</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<div class="date-selector-wrapper">
+				<input type="date" id="forecast-date" value="2025-09-20" min="2024-02-21" max="2025-09-26">
+			</div>
+
+			<a id="today-weather-link" href="#" role="button" aria-label="View today's detailed weather">
+				<p id="today-temp">29°C</p>
+				<span class="details-text">Click for more details</span>
+			</a>
+
+			<div class="forecast-container" aria-live="polite" aria-atomic="true">
+				<!-- 5-day forecast cards populated by main.js -->
+			</div>
+		</main>
+
+		<footer>
+			<p><a href="about.html">About this Project</a></p>
+		</footer>
+	</div>
+
+	<script src="hourly.js"></script>
+</body>
+</html>

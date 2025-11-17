@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HCMC Temperature Forecasting Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<body>
+    <header>
+        <h1>Our Project Journey</h1>
+        <a href="index.html" class="nav-button">← Back to Forecast App</a>
+    </header>
+
+    <nav class="progress-nav">
+        <ol>
+            <li><span>Data Sourcing</span></li>
+            <li><span>EDA</span></li>
+            <li><span>Data Processing</span></li>
+            <li><span>Feature Engineering</span></li>
+            <li><span>Modeling</span></li>
+            <li><span>Retraining</span></li>
+            <li><span>Hourly Data</span></li>
+            <li><span>ONNX</span></li>
+        </ol>
+    </nav>
+
+    <main id="content-container">
+        <!-- All content sections are now inside the main container -->
+        <section class="content-section" id="content-0">
+            <h2>Data Sourcing Methodology</h2>
+            <p>This section details the methodology used to collect the historical weather data for Ho Chi Minh City, which forms the foundation of this forecasting project.</p>
+            
+            <div class="card">
+                <h3>Key Collection Parameters</h3>
+                <ul>
+                    <li><strong>Data Source:</strong> Visual Crossing Weather History API, as per the project requirements.</li>
+                    <li><strong>Location Specificity:</strong> The exact location string "Hồ Chí Minh city" was used to retrieve data for the entire metropolitan area, ensuring consistency.</li>
+                    <li><strong>Time Period:</strong> We collected a substantial ~10-year period of daily and hourly weather data, spanning from <strong>January 1, 2015, to October 1, 2025</strong>.</li>
+                    <li><strong>Feature Selection:</strong> All available weather metrics were selected, with the logical exception of snow and snowdepth, which are irrelevant for HCMC's tropical climate.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Collection Strategy</h3>
+                <p>A dual approach was necessary to handle the vastly different data sizes:</p>
+                <ul>
+                    <li><strong>Daily Data (3,927 records):</strong> Due to its manageable size, the daily dataset was collected using a manual download approach, requiring two accounts to bypass API limits.</li>
+                    <li><strong>Hourly Data (94,248 records):</strong> For the much larger hourly dataset, manual collection was deemed impractical and error-prone. We developed a robust, automated Python script leveraging the Visual Crossing API.</li>
+                </ul>
+                <h4>Key Features of the Automated Script:</h4>
+                <ul>
+                    <li>Designed for resilience and data integrity with automated retries.</li>
+                    <li>Featured automated API key rotation from a pool of 25+ keys to bypass account limits.</li>
+                    <li>Included intelligent batch-based downloading that could resume from the last known timestamp, maximizing efficiency.</li>
+                    <li>Contained built-in data integrity checks to detect and handle duplicates or malformed records.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Exploratory Data Analysis (EDA)</h2>
+            <p>We must understand the data deeply before we can engineer features and start modeling. This EDA phase serves two primary purposes: to assess data quality and to uncover the underlying patterns, seasonality, and relationships within the data that will inform our modeling decisions.</p>
+            
+            <div class="card">
+                <h3>Target Variable Analysis: Trend, Seasonality, and Volatility</h3>
+                <p>Analysis of the daily average temperature over 10 years reveals three distinct components: a strong and predictable annual seasonality, evidence of a long-term upward trend (indicating non-stationarity), and periods of fluctuating volatility.</p>
+                <iframe src="trend_chart.html" title="Long-Term Temperature Trend Chart"></iframe>
+            </div>
+
+            <div class="card">
+                <h3>Seasonal Deep Dive: The Monsoon Cycle</h3>
+                <p>The climate is dominated by two distinct seasons: the hot, dry season peaking in April-May (Pre-monsoon Heat), and a cooler, rainy season from June to August (Monsoon Cooling), which significantly suppresses daytime maximum temperatures due to increased cloud cover.</p>
+                
+                <iframe src="monsoon_chart.html" title="Monsoon Cycle Chart"></iframe>
+            </div>
+
+            <div class="card">
+                <h3>STL Decomposition: Isolating Key Signals</h3> 
+                    <iframe src="stl_chart.html" title="STL Decomposition Chart"></iframe>
+            </div>
+
+            <div class="card">
+                <h3>Predictor Analysis: Distribution, Skew, & Outliers</h3>
+                    <iframe src="distributions_chart.html" title="Predictor Distributions Chart"></iframe>
+            </div>
+
+            <div class="card">
+                <h3>Bivariate & Seasonal Relationship Analysis</h3>
+                    <iframe src="pairplot_chart.html" title="Bivariate Analysis Pairplot"></iframe>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Data Processing & Correlation Analysis</h2>
+            <div class="card">
+                <h3>Column Sanitization & Missing Values</h3>
+                <p>The first step was to sanitize the data by removing non-predictive columns, such as constant identifiers (e.g., latitude) and redundant duplicates. Following this, we addressed missing values not by deleting rows, but with deterministic, rule-based imputation. For example, missing `preciptype` values were filled with 'none' when precipitation was zero, preserving the data's inherent meaning.</p>
+            </div>
+
+            <div class="card">
+                <h3>Correlation & Multicollinearity Strategy</h3>
+                <p>Correlation analysis confirmed our physical hypotheses: `solarradiation` showed a strong positive correlation with temperature, while `humidity` and `cloudcover` had strong negative correlations. The analysis also revealed severe multicollinearity (high correlation between predictors). Our strategy to manage this was to leverage models with built-in regularization, like Ridge and Lasso, which can handle redundant features effectively, rather than performing manual feature removal.</p>
+            </div>
+
+            <div class="card">          
+                <h3>Pearson Correlation Matrix</h3>
+                    <iframe src="pearson_chart.html" title="Pearson Correlation Matrix"></iframe>
+            </div>
+
+            <div class="card">          
+                <h3>Spearman Correlation Matrix</h3>
+                    <iframe src="spearman_chart.html" title="Spearman Correlation Matrix"></iframe>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Feature Engineering</h2>
+            <div class="card">
+                <h3>Creating an Information-Rich Feature Set</h3>
+                <p>This was a critical stage where we transformed the clean data into a feature set that makes underlying patterns explicit for our models. We engineered features across four key dimensions:</p>
+                <ul>
+                    <li><strong>Temporal Features:</strong> Basic features like 'year' and 'month' capture long-term trends, while cyclical features (sine/cosine transformations of the day of the year) allow the model to understand the cyclical nature of seasons.</li>
+                    <li><strong>Domain-Specific Features:</strong> We calculated high-value predictors like 'daylight_hours' and 'temp_range' (the difference between max and min temperature) to directly quantify key drivers of temperature.</li>
+                    <li><strong>Lag & Rolling Window Features:</strong> The cornerstone of our time-series approach. Lag features provide the model with a "memory" of recent conditions (e.g., yesterday's temperature), while rolling window features (e.g., 7-day average temperature) provide "context" about recent momentum and volatility.</li>
+                    <li><strong>Categorical & Text Features:</strong> The `preciptype` column was one-hot encoded, and the free-text `description` column was converted into numerical features using a TF-IDF and Truncated SVD pipeline to capture its qualitative nuances.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Modeling Strategy & Evaluation</h2>
+            <div class="card">
+                <h3>Forecasting Strategy: Direct, Multi-Model Approach</h3>
+                <p>We implemented a <strong>Direct Forecasting Strategy</strong>. Instead of training one model to predict all future steps, we trained five separate, specialist models, each one dedicated to predicting a specific future day (t+1, t+2, t+3, t+4, and t+5). This approach is more robust, avoids the compounding errors of recursive strategies, and allows each model to become an expert at its specific forecast horizon.</p>
+            </div>
+
+            <div class="card">
+                <h3>Stage 1: The Model Bake-Off</h3>
+                <p>We systematically evaluated a diverse range of model architectures. The initial high-level leaderboard produced a surprising result: with our rich feature set, simple linear models (like RidgeCV) significantly outperformed more complex tree-based models (like CatBoost, LGBM) out-of-the-box.</p>
+                <h4>High-Level Leaderboard (Avg. CV R² across all 5 horizons)</h4>
+                <table>
+                    <thead>
+                        <tr><th>Rank</th><th>Model</th><th>Model Family</th><th>Avg CV R² ↑</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>#1</td><td>RidgeCV</td><td>Linear</td><td>0.4219</td></tr>
+                        <tr><td>#2</td><td>LinearRegression</td><td>Linear</td><td>0.4185</td></tr>
+                        <tr><td>#3</td><td>SimpleAveragingEnsemble</td><td>Ensemble</td><td>0.4175</td></tr>
+                        <tr><td>#4</td><td>CatBoostRegressor</td><td>Tree-based</td><td>0.3248</td></tr>
+                        <tr><td>#5</td><td>LGBMRegressor</td><td>Tree-based</td><td>0.2901</td></tr>
+                        <tr><td>...</td><td>Baseline (Persistence)</td><td>Baseline</td><td>0.1575</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">          
+                <h3>Feature Selection for Linear Models via LASSO</h3>
+                <iframe src="lasso_sunburst_chart.html" title="LASSO Feature Selection Sunburst Chart"></iframe>
+            </div>
+
+            <div class="card">
+                <h3>Stage 2: Hyperparameter Optimization (HPO) with Optuna</h3>
+                <p>While linear models performed best initially, we hypothesized that the performance of gradient boosting models could be significantly improved with careful tuning. We used <strong>Optuna</strong>, a state-of-the-art HPO framework, to find the optimal set of hyperparameters for our tree-based models for each of the five forecast horizons individually. This process dramatically improved their performance, making them competitive with the linear models.</p>
+            </div>
+
+            <div class="card">
+                <h3>Stage 3: The Champion Model - A Weighted Ensemble</h3>
+                <p>The final analysis revealed that the best performance was achieved by creating a "simple" horizon-weighted average ensemble. This model combines the stability of our best linear model (<strong>RidgeCV</strong>) with the predictive power of our best fine-tuned tree model (<strong>LGBM</strong>). By giving more weight to the tree model for short-term forecasts (t+1, t+2) and more weight to the linear model for long-term forecasts (t+3 to t+5), we created a hybrid champion that is more robust and accurate across all horizons than either model alone.</p>
+            </div>
+
+            <div class="card">
+                <h3>Final Performance on Unseen Test Data</h3>
+                <p>The champion ensemble model was trained on 100% of the training data and evaluated exactly once on the held-out test set. It successfully explains nearly <strong>62%</strong> of the temperature variance on unseen data, with an average forecast error of less than one degree Celsius.</p>
+                <table>
+                    <thead>
+                        <tr><th>Horizon</th><th>Ensemble R² ↑</th><th>Ensemble RMSE ↓</th><th>Ensemble MAE ↓</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>t+1</td><td>0.7460</td><td>0.7912 °C</td><td>0.6265 °C</td></tr>
+                        <tr><td>t+2</td><td>0.6306</td><td>0.9555 °C</td><td>0.7628 °C</td></tr>
+                        <tr><td>t+3</td><td>0.5805</td><td>1.0195 °C</td><td>0.8130 °C</td></tr>
+                        <tr><td>t+4</td><td>0.5689</td><td>1.0336 °C</td><td>0.8225 °C</td></tr>
+                        <tr><td>t+5</td><td>0.5711</td><td>1.0325 °C</td><td>0.8246 °C</td></tr>
+                        <tr><td><strong>Average</strong></td><td><strong>0.6194</strong></td><td><strong>0.9665 °C</strong></td><td><strong>0.7699 °C</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Champion Model Tracking Performance</h3>
+                <p>The dashboard below shows the model's predictions (red dotted line) tracking the actual temperature (blue line) on the test set. It successfully captures both the large-scale seasonal trends and the majority of day-to-day fluctuations.</p>
+                <iframe src="champion_dashboard.html" title="Champion Model Performance Dashboard"></iframe>
+            </div>
+
+            <div class="card">
+                <h3>Statistical Diagnostics</h3>
+                <p>Further diagnostics confirm the model's robustness. The "Actual vs. Predicted" scatter plot shows the model is well-calibrated, and the error distribution plot confirms that the model's errors are unbiased and approximately normally distributed.</p>
+                <iframe src="champion_stats.html" title="Champion Model Statistical Diagnostics"></iframe>
+            </div>
+
+            <div class="card">
+                <h3>Model Belief vs. Actual Impact (SHAP vs. Permutation Importance)</h3>
+                <p>Further diagnostics confirm the model's robustness. The "Actual vs. Predicted" scatter plot shows the model is well-calibrated, and the error distribution plot confirms that the model's errors are unbiased and approximately normally distributed.</p>
+                <iframe src="importance_chart.html" title="SHAP vs Permutation Importance Chart"></iframe>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>When Should the Model Be Retrained?</h2>
+            <div class="card">
+                <h3>Understanding Model Drift</h3>
+                <p>A static model's performance will inevitably degrade over time as the real-world climate it's trying to predict evolves. This is known as <strong>model drift</strong>. We designed a robust, automated strategy for monitoring our models and deciding when a retrain is necessary.</p>
+            </div>
+
+            <div class="card">
+                <h3>The Recommended Retraining Policy</h3>
+                <p>Based on a 180-day simulation experiment, we recommend a <strong>3-tier priority system</strong> for retraining, which moves beyond a simple trigger to a more intelligent, risk-based approach:</p>
+                <table>
+                    <thead>
+                        <tr><th>Priority</th><th>Trigger Condition</th><th>Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>HIGH</strong></td><td>Severe performance degradation is detected (e.g., RMSE > 1.5x baseline or R² drops by >0.3).</td><td><strong>Immediate Retrain</strong></td></tr>
+                        <tr><td><strong>MEDIUM</strong></td><td>Moderate performance degradation OR a combination of Data Drift and Label Drift is detected.</td><td><strong>Proactive Retrain</strong></td></tr>
+                        <tr><td><strong>LOW</strong></td><td>Scheduled Maintenance: 90 days have passed since the last retrain.</td><td><strong>Scheduled Retrain</strong></td></tr>
+                    </tbody>
+                </table>
+                <p>This policy balances reactivity to critical failures with stability against transient noise, ensuring the model remains accurate and reliable in a production environment.</p>
+            </div>
+
+            <div class="card">
+                <h3>Simulation Evidence: Static vs. Adaptive Ensemble</h3>
+                <iframe src="retraining_simulation_chart1.html" title="Static vs Adaptive Ensemble Simulation Chart - 1"></iframe>
+                <iframe src="retraining_simulation_chart2.html" title="Static vs Adaptive Ensemble Simulation Chart - 2"></iframe>
+                <iframe src="retraining_simulation_chart3.html" title="Static vs Adaptive Ensemble Simulation Chart - 3"></iframe>
+                <iframe src="retraining_simulation_chart4.html" title="Static vs Adaptive Ensemble Simulation Chart - 4"></iframe>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Hourly Weather Data Forecasting Analysis</h2>
+            <div class="card">
+                <h3>Key Question: Can Hourly Data Improve Daily Forecasts?</h3>
+                <p>We explored two distinct strategies to answer this:
+                    <ol>
+                        <li><strong>Strategy 1 (Aggregate-then-Predict):</strong> We first aggregated the rich hourly data into a powerful daily feature set (capturing intra-day volatility, timing of extremes, etc.) and then trained our daily forecasting models on this enriched dataset.</li>
+                        <li><strong>Strategy 2 (Predict-then-Aggregate):</strong> We built models to forecast the temperature at an hourly resolution first, and then aggregated these high-frequency predictions into daily averages.</li>
+                    </ol>
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Final Conclusion & Recommendation</h3>
+                <p>The results revealed a fascinating trade-off. While our original, hyperparameter-tuned Daily model remained superior at explaining variance (Highest R²), the <strong>Predict-then-Aggregate (Strategy 2) model was the decisive winner on error metrics, achieving the lowest Avg RMSE and Avg MAE.</strong></p>
+                <p><strong>Recommendation:</strong> For a production system where minimizing the absolute forecast error is the primary goal, the <strong>Predict-then-Aggregate strategy is the superior choice</strong> and should be the focus of future optimization efforts (i.e., applying a full HPO campaign to the hourly models).</p>
+                <table>
+                    <thead>
+                        <tr><th>Model / Strategy</th><th>Avg R² ↑</th><th>Avg RMSE ↓</th><th>Avg MAE ↓</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Champion (Daily HPO)</td><td><strong>0.6195</strong></td><td>0.9664 °C</td><td>0.7698 °C</td></tr>
+                        <tr><td>Strategy 2 (Predict-then-Aggregate)</td><td>0.6185</td><td><strong>0.9436 °C</strong></td><td><strong>0.7569 °C</strong></td></tr>
+                        <tr><td>Strategy 1 (Aggregate-then-Predict)</td><td>0.6117</td><td>0.9762 °C</td><td>0.7730 °C</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Improving Deployment Efficiency with ONNX</h2>
+            <div class="card">
+                <h3>The Challenge: From Research to Production</h3>
+                <p>After developing a high-performing model, the final step is transitioning it to a production environment. This process, known as <strong>model deployment</strong>, introduces new challenges beyond predictive accuracy, including:</p>
+                <ul>
+                    <li><strong>Dependency & Integration Complexity:</strong> Python-based models (Scikit-learn, LightGBM) have heavy dependencies that are difficult to replicate in other environments (like Java, C#, or C++).</li>
+                    <li><strong>Hardware & Platform Diversity:</strong> A model may need to run on various systems, from powerful cloud servers to resource-limited edge devices, which native formats are not optimized for.</li>
+                    <li><strong>Inference Performance:</strong> Training frameworks prioritize flexibility, not raw prediction speed (inference). Real-time applications require low latency and high throughput.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>The Solution: ONNX (Open Neural Network Exchange)</h3>
+                <p>To solve these challenges, we studied <strong>ONNX</strong>, an open-source format designed to represent machine learning models in a standardized way. It serves as a universal bridge, allowing models trained in one framework (like Python) to be executed by a high-performance inference engine (the <strong>ONNX Runtime</strong>) on a wide variety of platforms and languages.</p>
+            </div>
+
+            <div class="card">
+                <h3>Case Study: Converting RidgeCV to ONNX</h3>
+                <p>As a proof-of-concept, we converted our simple but powerful `RidgeCV` model from its native Scikit-learn format (`.pkl`) to the ONNX format (`.onnx`). We then benchmarked the inference performance of both versions.</p>
+                <h4>Deployment Performance Comparison</h4>
+                <table>
+                    <thead>
+                        <tr><th>Model</th><th>Deployment Type</th><th>Avg. Inference Time (µs)</th><th>Throughput (preds/sec)</th><th>Speedup</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>RidgeCV</td><td>.pkl (Scikit-learn)</td><td>350.5 µs</td><td>1,666,377</td><td>1.00x</td></tr>
+                        <tr><td>RidgeCV</td><td>.onnx (ONNX Runtime)</td><td><strong>98.1 µs</strong></td><td><strong>5,955,824</strong></td><td><strong>3.57x</strong></td></tr>
+                    </tbody>
+                </table>
+                <h4>Key Findings:</h4>
+                <ul>
+                    <li><strong>Inference Speed:</strong> The ONNX model demonstrated a <strong>3.57x speedup</strong>, reducing average prediction time from 350.5 µs to just 98.1 µs. This is critical for low-latency applications.</li>
+                    <li><strong>Throughput Capacity:</strong> The ONNX deployment achieved a <strong>3.5x increase</strong> in throughput, capable of handling significantly more requests without additional infrastructure.</li>
+                    <li><strong>Feasibility of Champion Model:</strong> While a direct conversion of our complex, custom Python-based ensemble champion is not feasible, this study proves that its individual base models (RidgeCV and LGBM) can be converted to ONNX. A production pipeline could then be built to run these high-speed ONNX models and perform the final weighted-average calculation in any language.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Navigation Arrows INSIDE the main container -->
+        <div class="page-nav">
+            <button id="prev-step">← Previous</button>
+            <button id="next-step">Next →</button>
+        </div>
+    </main>
+
+    <script src="about.js"></script>
+</body>
+</html>
