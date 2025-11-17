@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+plotly
+lightgbm
+optuna
+joblib
+rich
+statsmodels
+shap
+tqdm
+scipy
+xgboost
+catboost
+optuna-dashboard
